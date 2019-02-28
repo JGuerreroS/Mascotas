@@ -1,0 +1,4 @@
+
+10- modificar controlador que recibe formulario de editar mascota, para recibir el nuevo parametro
+
+11- modificar función que actualiza mascota, con el nuevo parametro de patron
