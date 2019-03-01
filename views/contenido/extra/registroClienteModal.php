@@ -64,7 +64,7 @@
             </div>
             <div class="modal-body">
 
-                <form id="formEdit" method="post" action="controllers/registroClienteEditar.php">
+                <form id="formEdit">
 
                     <label>Nombre:</label>
                     <input type="text" name="rNombre" id="rNombre" class="form-control">
@@ -84,15 +84,15 @@
 
                     <p id="rUsuario"></p>
                     <p id="rFecha"></p>
+                </form>
 
             </div>
             <div class="modal-footer">
 
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                 <button type="button" class="btn btn-warning" id="editar">Editar</button>
-                <button type="submit" class="btn btn-success" id="guardar">Guardar</button>
+                <button type="button" class="btn btn-success" id="guardar">Guardar</button>
 
-                </form>
             </div>
         </div>
     </div>

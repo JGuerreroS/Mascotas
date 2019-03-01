@@ -15,10 +15,7 @@
 
     <div id="clienteTabla"></div>
 
-    <?php
-
-    include 'extra/registroClienteModal.php'; //Cargar Modal
-?>
+    <?php include 'extra/registroClienteModal.php'; //Cargar Modal ?>
 
     <!-- Hasta aqui el contenido -->
 </div>
@@ -26,6 +23,7 @@
 <script>
 $(document).ready(function() {
 
+    // registrar clientes
     $('#btn-guardarCliente').click(function (e) {
         e.preventDefault();
         $.ajax({
@@ -49,21 +47,25 @@ $(document).ready(function() {
     });
 
     
-
     // cargar tabla de dueños
     $("#clienteTabla").load('views/contenido/extra/registroClienteTabla.php');
 
+    // Colocar en mayusculas y quitar numeros
     $('#nombre,#apellido,#rNombre,#rApellidos').keyup(function() {
         this.value = (this.value + '').toUpperCase(); // Mayusculas
         this.value = (this.value + '').replace(/[^A-Z-Á-É-Í-Ó-Ú]/g, ' '); // Sin numeros
     });
 
+    // Colocar en mayusculas
     $('#direccion,#rDireccion').keyup(function() {
         this.value = (this.value + '').toUpperCase(); // Mayusculas
     });
 
+    // Ocultar botón guardar al abrir modal de editar
     $("#guardar").hide();
 
+
+    // Mostrar botón guardar y activar inputs al presionar editar
     $("#editar").click(function (e) {
 
         $("#guardar").show();
@@ -72,9 +74,30 @@ $(document).ready(function() {
         
     });
 
+    $("#guardar").click(function (e) {
+
+        e.preventDefault();
+        $.ajax({
+            type: "post",
+            url: "controllers/registroClienteEditar.php",
+            data: $("#formEdit").serialize(),
+            success: function (r) {
+                if(r == 1){
+                    $("#clienteTabla").load('views/contenido/extra/registroClienteTabla.php');
+                    $("#m_verMas").modal('hide');
+                    alertify.success('Registro actualizado con éxito');
+                }else{
+                    alertify.error('No se pudo actualizar el registro');
+                }
+            }
+        });
+        
+    });
+
 
 }); // fin Ready
 
+// Cargar información en los inputs al abrir modal de editar
 function verMas(id) {
 
     $.getJSON("controllers/registroClienteVerMas.php", { id_cliente: id }, function(r) {

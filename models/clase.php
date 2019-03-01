@@ -17,15 +17,15 @@
     function editarClientes($datos){
 
         include '../core/conexion.php';
+        // include '../../../core/conexion.php';
 
         $sql = "UPDATE clientes SET nombre='$datos[nombre]', apellidos='$datos[apellidos]', run='$datos[run]', email='$datos[correo]', direccion='$datos[direccion]' where id=$datos[id_usuario]";
 
-        $result = mysqli_query($conn, $sql);
-
-        return $msg = "<script>
-                        alert('Cliente actualizado con éxito');
-                        window.location='../registroCliente';
-                    </script>";
+        if (mysqli_query($conn, $sql)) {
+            return 1;
+        } else {
+            return 2;
+        }
 
     }
 
