@@ -13,8 +13,10 @@
 
     <hr>
 
+    <div id="clienteTabla"></div>
+
     <?php
-    include 'extra/registroClienteTabla.php'; //Cargar Tabla
+
     include 'extra/registroClienteModal.php'; //Cargar Modal
 ?>
 
@@ -23,6 +25,9 @@
 
 <script>
 $(document).ready(function() {
+
+    // cargar tabla de dueños
+    $("#clienteTabla").load('views/contenido/extra/registroClienteTabla.php');
 
     $('#nombre,#apellido,#rNombre,#rApellidos').keyup(function() {
         this.value = (this.value + '').toUpperCase(); // Mayusculas

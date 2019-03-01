@@ -91,7 +91,7 @@
 
     function verClientes(){
 
-        include 'core/conexion.php';
+        include '../../../core/conexion.php';
 
         $sql = "SELECT id, CONCAT(nombre, ' ', apellidos) as patron, run, email, direccion FROM clientes";
 

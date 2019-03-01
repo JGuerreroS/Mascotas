@@ -1,8 +1,3 @@
-<?php
-include 'models/clase.php';
-$datos = verClientes();
-?>
-
 <table class="table table-striped table-bordered" id="myTabla">
 
     <thead>
@@ -20,12 +15,15 @@ $datos = verClientes();
 
         <?php
     $nro=0;
+    include '../../../models/clase.php';
+
+$datos = verClientes();
     while ($ver = mysqli_fetch_array($datos)) { 
         $nro++; $id=$ver[0];
     ?>
         <tr>
-            <td> <?php echo $nro;?> </td>
-            <td> <?php echo $ver[1];?> </td>
+            <td> <?php echo $nro; ?> </td>
+            <td> <?php echo $ver[1]; ?> </td>
             <td class="text-center"> <?php echo $ver[2];?> </td>
             <td> <?php echo $ver[3];?> </td>
             <td> <?php echo $ver[4];?> </td>

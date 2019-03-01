@@ -13,6 +13,6 @@ if (!$conn) {
 
 // echo 'Si hay enlace';
 
-$fecha = date("Y-m-d h:i:s");
+// echo $fecha = date("Y-m-d h:i:s");
 
 ?>
