@@ -26,6 +26,30 @@
 <script>
 $(document).ready(function() {
 
+    $('#btn-guardarCliente').click(function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: "post",
+            url: "controllers/registroCliente.php",
+            data: $("#formRegistroCliente").serialize(),
+            success: function (r) {
+                if(r == 1){
+                    $("#clienteTabla").load('views/contenido/extra/registroClienteTabla.php');
+                    $("#formRegistroCliente")[0].reset();
+                    $("#exampleModal").modal('hide');
+                    alertify.success('Cliente registrado correctamente');
+                }else if(r == 2){
+                    alertify.error('No se pudo insertar el registro');
+                }else{
+                    alertify.warning('Formulario incompleto');
+                }
+            }
+        });
+
+    });
+
+    
+
     // cargar tabla de dueños
     $("#clienteTabla").load('views/contenido/extra/registroClienteTabla.php');
 

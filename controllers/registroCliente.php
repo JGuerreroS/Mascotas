@@ -29,9 +29,6 @@ if( isset($_POST['nombre']) &&
 
 }else{
 
-    header('Location: ../registroCliente');
+    echo 3;
 
 }
-
-
-

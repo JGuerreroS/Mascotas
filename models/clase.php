@@ -6,12 +6,11 @@
 
         $sql = "insert into clientes (nombre, apellidos, run, email, direccion, id_usuario, fecha_registro) values ('$datos[nombre]', '$datos[apellido]', '$datos[run]', '$datos[email]', '$datos[direccion]', $datos[usuario], '$fecha')";
 
-        $result = mysqli_query($conn, $sql);
-
-        return $msg = "<script>
-                            alert('Registro realizado con éxito');
-                            window.location='../registroCliente';
-                        </script>";
+        if(mysqli_query($conn, $sql)){
+            return 1;
+        }else{
+            return 2;
+        }
 
     }
 
