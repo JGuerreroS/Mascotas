@@ -48,7 +48,7 @@
 
         include '../core/conexion.php';
 
-        $sql = "UPDATE mascota SET microchip='$datos[microchip]', nombre='$datos[nombre]', id_especie=$datos[especie], id_raza=$datos[raza], sexo=$datos[sexo], fecha_nacimiento='$datos[nacimiento]', id_color=$datos[color], esterilizado=$datos[esterilizado], id_propietario=$datos[patron] where id_mascota=$datos[id_mascota]";
+        $sql = "UPDATE mascota SET microchip='$datos[microchip]', nombre='$datos[nombre]', id_especie=$datos[especie], id_raza=$datos[raza], sexo=$datos[sexo], fecha_nacimiento='$datos[nacimiento]', id_color=$datos[color], esterilizado=$datos[esterilizado], id_patron_color=$datos[patron] where id_mascota=$datos[id_mascota]";
 
         if (mysqli_query($conn, $sql)) {
             return 1;
@@ -82,10 +82,32 @@
 
         include '../core/conexion.php';
 
+        // Consulta para obtener el nombre del archivo pdf
+        $borrar = mysqli_query($conn,"SELECT certificado, calidad FROM mascota WHERE id_mascota = $id_mascota");
+
+        // Almacenar arreglo
+        $row = mysqli_fetch_assoc($borrar);
+
+        // Concatenar ruta junto con el nombre del archivo
+        $certificado = "../uploads/certificados/".$row['certificado'];
+        $calidad = "../uploads/calidad/".$row['calidad'];
+
+        // Consulta de eliminar registro
         $sql = "DELETE FROM mascota WHERE id_mascota = $id_mascota";
 
-        return $result = mysqli_query($conn, $sql);
+        // Ejecutar consulta
+        $result = mysqli_query($conn, $sql);
 
+        if ($result) {
+
+            // Eliminar archivos
+            unlink($certificado);
+            unlink($calidad);
+
+            return 1;
+
+        }
+        
     }
 
     function verClientes(){
@@ -285,7 +307,7 @@
 
     function verMascotas(){
 
-        include 'core/conexion.php';
+        include '../../../core/conexion.php';
 
         $sql = "SELECT id_mascota, microchip, m.nombre, e.nombre as especie, r.nombre as raza, sexo, fecha_nacimiento, color, cl.nombre as patron, m.fecha_registro FROM mascota m
         INNER JOIN especies e ON (m.id_especie = e.id)

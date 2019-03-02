@@ -17,7 +17,5 @@
 <script src="<?php echo SERVERURL; ?>public/lib/datatables/buttons.colVis.min.js"></script>
 <!-- Alertify Js -->
 <script src="<?php echo SERVERURL; ?>public/lib/alertify/alertify.js"></script>
-<!-- Formato personalizado datatables -->
-<!-- <script src="<?php echo SERVERURL; ?>public/js/formatoDataTables.js"></script> -->
 <!-- Mis Js -->
 <script src="<?php echo SERVERURL; ?>public/js/main.js"></script>

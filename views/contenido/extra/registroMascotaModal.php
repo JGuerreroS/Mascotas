@@ -1,5 +1,5 @@
 <!-- Modal registro mascotas -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="registroMascotaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
 
     <div class="modal-dialog" style="max-width: 800px !important;" role="document">
@@ -40,11 +40,11 @@
                                         <select class="select2 form-control custom-select" id="especie" name="especie"
                                             required>
                                             <option value="">Seleccione</option>
-                                            <?php
+                                            <?php 
                                                 include 'core/conexion.php';
                                                 $sql = "select id, nombre from especies";
                                                 $result = mysqli_query($conn,$sql);
-                                                while ($ver = mysqli_fetch_array($result)) {
+                                                while ($ver = mysqli_fetch_array($result)) { 
                                             ?>
 
                                             <option value="<?php echo $ver[0]; ?>"> <?php echo $ver[1]; ?> </option>
@@ -81,7 +81,7 @@
                                         <select class="select2 form-control custom-select" id="color" name="color"
                                             required>
                                             <option value="">Seleccione</option>
-                                            <?php
+                                            <?php 
                                                 include 'core/conexion.php';
                                                 $sql = "select id_color, color from colores";
                                                 $result = mysqli_query($conn,$sql);
@@ -174,14 +174,15 @@
                                     <label>Razón de tenencia</label>
                                     <select class="select2 form-control custom-select" name="razon" id="razon" required>
                                         <option value="">Seleccione</option>
-                                        <?php
+                                            <?php
+                                                include 'models/clase.php';
                                                 $razon = verRazon();
-                                                while ($mostrar = mysqli_fetch_array($razon)) { 
+                                                while ($mostrar = mysqli_fetch_array($razon)) {
                                             ?>
 
                                         <option value="<?php echo $mostrar[0]; ?>"> <?php echo $mostrar[1]; ?> </option>
 
-                                        <?php } ?>
+                                            <?php } ?>
                                     </select>
                                 </div>
                                 <label>Modo de obtención</label>
@@ -190,7 +191,7 @@
                                         <option value="">Seleccione</option>
                                         <?php
                                                 $obtencion = verObtencion();
-                                                while ($mos = mysqli_fetch_array($obtencion)) {    
+                                                while ($mos = mysqli_fetch_array($obtencion)) {
                                             ?>
 
                                         <option value="<?php echo $mos[0]; ?>"> <?php echo $mos[1]; ?> </option>
@@ -424,13 +425,9 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-warning" id="editar">Editar</button>
-                <button type="button" class="btn btn-success" id="guardar">Guardar</button>
-
-
+                <button type="button" class="btn btn-warning" id="editarMascota">Editar</button>
+                <button type="button" class="btn btn-success" id="guardarEdicionMascota">Guardar</button>
             </div>
-
-
 
         </div>
     </div>

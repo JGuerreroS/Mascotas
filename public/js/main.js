@@ -1,9 +1,11 @@
 $(document).ready(function() {
 
-    /*Inicio de la Sección de Clientes*/
-
     // cargar tabla de clientes
     $("#clienteTabla").load('views/contenido/extra/registroClienteTabla.php');
+    // cargar tabla de mascotas
+    $("#mascotasTabla").load('views/contenido/extra/registroMascotaTabla.php');
+
+    /*Inicio de la Sección de Clientes en ready*/
 
     // registrar clientes
     $('#btn-guardarCliente').click(function (e) {
@@ -74,7 +76,82 @@ $(document).ready(function() {
         
     });
 
+    /*Fin de la Sección de Clientes en ready*/
+
+/*------------------------------------------------------------------------------------------------------------*/
+    
+    /*Inicio de la Sección de Mascotas en ready*/
+
+    // Función que carga dinamicamente las razas de las especies en registro de mascota
+    $("#especie").change(function() {
+
+        $("#especie option:selected").each(function() {
+            especie = $(this).val();
+            $.get("controllers/selectRaza.php", {
+                id_especie: especie
+            }, function(data) {
+                $("#raza").html(data);
+            });
+        });
+
+    });
+
+    // Ocultar botón de guardar edición de mascota
+    $("#guardarEdicionMascota").hide();
+
+    // Al editar mascota
+    $("#editarMascota").click(function(e) {
+
+        $("#guardarEdicionMascota").show();
+        $("#rMicrochip,#rNacimiento,#rNombre,#rEspecie,#rRaza,#rSexo,#rEsterilizado,#rColor,#rPatron,#rPropietario").attr("disabled", false);
+        e.preventDefault();
+
+    });
+
+    // Convertir letras en mayuscula al escribir el microchip
+    $('#micro,#rMicrochip').keyup(function() {
+        this.value = (this.value + '').toUpperCase(); // Mayusculas
+    });
+
+    //Función que carga dinamicamente las razas de las especies en editar de mascota
+    $("#rEspecie").change(function() {
+
+        $("#rEspecie option:selected").each(function() {
+            especie = $(this).val();
+            $.get("controllers/selectRaza.php", {
+                id_especie: especie
+            }, function(data) {
+                $("#rRaza").html(data);
+            });
+        });
+
+    });
+
+    // Guardar datos despues de editar la mascota
+    $("#guardarEdicionMascota").click(function (e) {
+
+        $.ajax({
+            type: "post",
+            url: "controllers/registroMascotaEditar.php",
+            data: $("#frmEditMascota").serialize(),
+            success: function (r) {
+                if (r == 1) {
+                    alertify.success('Datos actualizados corectamente');
+                    setTimeout("location.reload()", 2000);
+                } else {
+                    alertify.error('No se pudieron actualizar los datos');
+                }
+            }
+        });
+        e.preventDefault();
+        
+    });
+
+    /*Fin de la Sección de Mascotas en ready*/
+
 }); //Fin de la function ready
+
+/*--------------------------------Clientes---------------------------------------------*/
 
 // Cargar información en los inputs al abrir modal de editar
 function verMas(id) {
@@ -116,4 +193,51 @@ function borrar(id) {
 
 }
 
-/*Fin de la Sección de Clientes*/
+/*--------------------------------Clientes---------------------------------------------*/
+
+/*--------------------------------Mascotas---------------------------------------------*/
+
+function verMascota(id) {
+    $.getJSON("controllers/verMasMascotas.php", { mascota: id }, function(r) {
+
+        $("#id_mascota").val(r.idMascota);
+        $("#rMicrochip").val(r.Microchip).attr("disabled", true);
+        $("#rNombre").val(r.Nombre).attr("disabled", true);
+        $("#rEspecie").val(r.idEspecie).attr("disabled", true);
+        $("#rRaza").val(r.Raza).attr("disabled", true);
+        $("#rSexo").val(r.Sexo).attr("disabled", true);
+        $("#rEsterilizado").val(r.Esterilizado).attr("disabled", true);
+        $("#rNacimiento").val(r.Nacimiento).attr("disabled", true);
+        $("#rColor").val(r.Color).attr("disabled", true);
+        $("#rPatron").val(r.Patron).attr("disabled", true);
+        $("#rPropietario").val(r.Propietario).attr("disabled", true);
+        $("#rUsuario").html('Usuario: ' + r.Usuario);
+        $("#rFechaRegistro").html('Fecha de registro: ' + r.FechaRegistro);
+        $("#rCertificado").attr('href', r.Certificado);
+        $("#rCalidad").attr('href', r.Calidad);
+
+    });
+}
+
+function borrarMascota(id){
+
+    alertify.confirm('Eliminar registro', '¿Seguro que deseas eliminar este registro?', function(){ 
+    
+    $.get("controllers/registroMascotaBorrar.php", {id_mascota : id}, function (r) {
+
+        if(r == 1){
+
+            alertify.success("Mascota eliminada con éxito");
+            setTimeout("location.reload()", 2000);
+
+        }else{
+            alertify.error("No se pudo eliminar el registro");
+        }
+
+    });
+
+}, function(){});
+
+}
+
+/*--------------------------------Mascotas---------------------------------------------*/
