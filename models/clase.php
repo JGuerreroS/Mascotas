@@ -49,7 +49,7 @@
 
         include '../core/conexion.php';
 
-        $sql = "UPDATE mascota SET microchip='$datos[microchip]', nombre='$datos[nombre]', id_especie=$datos[especie], id_raza=$datos[raza], sexo=$datos[sexo], fecha_nacimiento='$datos[nacimiento]', id_color=$datos[color], esterilizado=$datos[esterilizado], id_propietario=$datos[patron] where id_mascota=$datos[id_mascota]";
+        $sql = "UPDATE mascota SET microchip='$datos[microchip]', nombre='$datos[nombre]', id_especie=$datos[especie], id_raza=$datos[raza], sexo=$datos[sexo], fecha_nacimiento='$datos[nacimiento]', id_color=$datos[color], esterilizado=$datos[esterilizado], id_patron_color=$datos[patron] where id_mascota=$datos[id_mascota]";
 
         if (mysqli_query($conn, $sql)) {
             return 1;

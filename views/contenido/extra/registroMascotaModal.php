@@ -156,14 +156,14 @@
                                 <div class="form-group">
                                     <label>Esterilizado</label>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" id="opcion" name="opcion" value="0"
+                                        <input class="form-check-input" type="radio" id="opcion" name="opcion" value="1"
                                             required>
                                         <label>
                                             Si
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" id="opcion" name="opcion" value="1"
+                                        <input class="form-check-input" type="radio" id="opcion" name="opcion" value="2"
                                             required>
                                         <label>
                                             No
