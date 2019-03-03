@@ -136,8 +136,10 @@ $(document).ready(function() {
             data: $("#frmEditMascota").serialize(),
             success: function (r) {
                 if (r == 1) {
+                    $("#verMascotas").modal('hide');
+                    $("#guardarEdicionMascota").hide();
+                    $("#mascotasTabla").load('views/contenido/extra/registroMascotaTabla.php');
                     alertify.success('Datos actualizados corectamente');
-                    setTimeout("location.reload()", 2000);
                 } else {
                     alertify.error('No se pudieron actualizar los datos');
                 }
@@ -147,9 +149,40 @@ $(document).ready(function() {
         
     });
 
+    // Registrar mascota
+    $("#btn-registrarMascota").on("click", function(e){
+        e.preventDefault();
+        var formData = new FormData(document.getElementById("frmRegistroMascota"));
+        $.ajax({
+            url: "controllers/registroMascota.php",
+            type: "post",
+            dataType: "html",
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(r){
+                if(r == 1){
+                    $("#registroMascotaModal").modal('hide');
+                    $("#mascotasTabla").load('views/contenido/extra/registroMascotaTabla.php');
+                    alertify.success("Registrado con éxito");
+                }else if(r == 2){
+                    alertify.message("Lo siento, el código de la mascota que intentas ingresar ya se encuentra registrado");
+                }else if(r == 3){
+                    alertify.error('No se pudo cargar el calidad del responsable, tipo de archivo no admitido o excede el peso maximo permitido (2 MB).');
+                }else if(r == 4){
+                    alertify.error('No se pudo cargar el certificado, tipo de archivo no admitido o excede el peso maximo permitido (2 MB).');
+                }else{
+                    alertify.error('Debes llenar todos los campos');
+                }
+            }
+        });
+    });
+
     /*Fin de la Sección de Mascotas en ready*/
 
 }); //Fin de la function ready
+
 
 /*--------------------------------Clientes---------------------------------------------*/
 
@@ -227,11 +260,13 @@ function borrarMascota(id){
 
         if(r == 1){
 
+            $("#mascotasTabla").load('views/contenido/extra/registroMascotaTabla.php');
             alertify.success("Mascota eliminada con éxito");
-            setTimeout("location.reload()", 2000);
 
         }else{
+
             alertify.error("No se pudo eliminar el registro");
+            
         }
 
     });

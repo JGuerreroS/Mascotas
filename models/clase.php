@@ -278,28 +278,25 @@
 
         include '../core/conexion.php';
 
+        // Verificar que la mascota no se encuentre ya registrada
         $verificar = "select * from mascota where microchip='$datos[micro]'";
         $resVerificar = mysqli_query($conn,$verificar);
         $totalVerificar = mysqli_num_rows($resVerificar);
-        if($totalVerificar == 0){
+        
+        if($totalVerificar == 0){ // Si no esta registrada
 
+            // Se registra
             $sql = "insert into mascota (microchip, nombre, id_especie, id_raza, sexo, fecha_nacimiento, id_color, id_patron_color, esterilizado, id_propietario, id_obtencion, id_razon, certificado, calidad, id_usuario, fecha_registro) values ('$datos[micro]','$datos[nombre]', $datos[especie], $datos[raza], $datos[sexo], '$datos[nacimiento]', $datos[color], $datos[patron], $datos[opcion], $datos[dueno], $datos[modo], $datos[razon], '$datos[certificado]', '$datos[calidad]', $datos[usuario], '$fecha')";
 
             $result = mysqli_query($conn,$sql);
 
             mysqli_close($conn);
 
-            return $msg = "<script>
-                            alert('Mascota registrada con éxito');
-                            window.location='../registroMascota';
-                        </script>";
+            return 1;
         
-        }else{
+        }else{ // Si esta registrada, no se vuelve a registrar
 
-            return $msg = "<script>
-                                alert('Lo siento, el código de la mascota que intentas ingresar ya se encuentra registrado');
-                                window.location='../registroMascota';
-                            </script>";
+            return 2;
         
         }
 

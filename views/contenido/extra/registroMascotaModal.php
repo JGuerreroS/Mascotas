@@ -22,8 +22,7 @@
                             <div class="card-body">
                                 <h4 class="card-title">Datos de la mascota</h4>
 
-                                <form action="controllers/registroMascota.php" method="post"
-                                    enctype="multipart/form-data">
+                                <form id="frmRegistroMascota" enctype="multipart/form-data" method="post">
 
                                     <div class="form-group">
                                         <label>Microchip</label>
@@ -156,14 +155,14 @@
                                 <div class="form-group">
                                     <label>Esterilizado</label>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" id="opcion" name="opcion" value="0"
+                                        <input class="form-check-input" type="radio" id="opcion" name="opcion" value="1"
                                             required>
                                         <label>
                                             Si
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" id="opcion" name="opcion" value="1"
+                                        <input class="form-check-input" type="radio" id="opcion" name="opcion" value="2"
                                             required>
                                         <label>
                                             No
@@ -174,7 +173,7 @@
                                     <label>Razón de tenencia</label>
                                     <select class="select2 form-control custom-select" name="razon" id="razon" required>
                                         <option value="">Seleccione</option>
-                                            <?php
+                                        <?php
                                                 include 'models/clase.php';
                                                 $razon = verRazon();
                                                 while ($mostrar = mysqli_fetch_array($razon)) {
@@ -182,7 +181,7 @@
 
                                         <option value="<?php echo $mostrar[0]; ?>"> <?php echo $mostrar[1]; ?> </option>
 
-                                            <?php } ?>
+                                        <?php } ?>
                                     </select>
                                 </div>
                                 <label>Modo de obtención</label>
@@ -209,6 +208,8 @@
                                 </div>
                             </div>
 
+                            </form>
+
                         </div>
 
                     </div>
@@ -219,7 +220,7 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button type="submit" class="btn btn-success">Guardar</button> </form>
+                <button type="button" id="btn-registrarMascota" class="btn btn-success">Guardar</button>
             </div>
 
         </div>
@@ -409,7 +410,7 @@
 
                                     <?php } mysqli_free_result($result); mysqli_close($conn); ?>
                                 </select>
-                    </form>
+                                </form>
                             </li>
 
                             <li class="list-group-item" id="rUsuario"></li>
