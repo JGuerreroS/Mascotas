@@ -8,6 +8,8 @@
 
     if($vistasR == 'login'):
         require_once './views/contenido/login-view.php';
+    elseif($vistasR == 'reporte'):
+        require_once './views/contenido/reporte-view.php';
     else:
 
 ?>

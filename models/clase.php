@@ -288,7 +288,7 @@
 
         include 'core/conexion.php';
 
-        $sql = "SELECT id_mascota, microchip, m.nombre, e.nombre as especie, r.nombre as raza, sexo, fecha_nacimiento, color, cl.nombre as patron, m.fecha_registro FROM mascota m
+        $sql = "SELECT id_mascota, microchip, m.nombre, e.nombre as especie, r.nombre as raza, sexo, fecha_nacimiento, color, CONCAT(cl.run, ' ' , cl.nombre, ' ', cl.apellidos) as propietario, m.fecha_registro FROM mascota m
         INNER JOIN especies e ON (m.id_especie = e.id)
         INNER JOIN razas r ON (m.id_raza = r.id)
         INNER JOIN colores c ON (m.id_color = c.id_color)

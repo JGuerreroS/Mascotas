@@ -17,6 +17,8 @@ class vistasModelo{
             $contenido = 'login';
         }elseif($vistas == 'index'){
             $contenido = 'login';
+        }elseif($vistas == 'reporte'){
+            $contenido = 'reporte';
         }else{
             $contenido = 'login';
         }
