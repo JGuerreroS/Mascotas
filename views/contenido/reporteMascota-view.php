@@ -40,29 +40,27 @@
 
 $(document).ready(function() {
 
-function obtener_registros(valorBusqueda) {
-    $.ajax({
-            url: 'controllers/consulta.php',
-            type: 'POST',
-            dataType: 'html',
-            data: { mascota: valorBusqueda },
-        })
+    function obtener_registros(valorBusqueda) {
+        $.ajax({
+                url: 'controllers/consulta.php',
+                type: 'POST',
+                dataType: 'html',
+                data: { mascota: valorBusqueda },
+            })
 
-        .done(function(resultado) {
-            $("#tabla_resultado").html(resultado);
-        })
-}
-
-$("#buscar").on('keyup', function() {
-    var valorBusqueda = $(this).val();
-    if (valorBusqueda != "") {
-        obtener_registros(valorBusqueda);
-    } else {
-        obtener_registros();
+            .done(function(resultado) {
+                $("#tabla_resultado").html(resultado);
+            })
     }
-});
 
-
+    $("#buscar").on('keyup', function() {
+        var valorBusqueda = $(this).val();
+        if (valorBusqueda != "") {
+            obtener_registros(valorBusqueda);
+        } else {
+            obtener_registros();
+        }
+    });
 
 
     $("#fecha").hide();
@@ -84,8 +82,6 @@ $("#buscar").on('keyup', function() {
         });
 
     });
-
-
 
 
 }); // Fin funcion ready
