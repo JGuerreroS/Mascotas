@@ -3,7 +3,7 @@
 $cliente = ($_GET['id_cliente'] ? $_GET['id_cliente'] : $_GET['id_cliente']);
 
 $sql = "SELECT c.id, nombre, apellidos, run, email, direccion, Name, c.fecha_registro FROM clientes c
-INNER JOIN users u on (c.id_usuario = u.Id) WHERE c.id = $cliente";
+INNER JOIN users u ON (c.id_usuario = u.Id) WHERE c.id = $cliente";
 
 include '../core/conexion.php';
 

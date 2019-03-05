@@ -8,81 +8,85 @@
 
     <hr>
 
-    <a href="reporte" target="_blank" class="btn btn-primary" id="pdf">PDF</a>
+    <!-- <a href="reporte" target="_blank" class="btn btn-primary" id="pdf">PDF</a> -->
 
-<?php
-include 'models/clase.php';
-$datos = verMascotas();
-?>
+    <label>Tipo de busqueda:</label>
+    <select id="seleccion">
+        <option value="1">Normal</option>
+        <option value="2">Por fecha</option>
+    </select>
 
-<table class="table table-striped table-bordered" id="example">
+    <div id="normal">
+        <input type="text" name="buscar" id="buscar" placeholder="Buscar...">
+    </div>
 
-    <thead>
-        <tr>
-            <th class="text-center">N°</th>
-            <th class="text-center">Microchip</th>
-            <th class="text-center">Nombre</th>
-            <th class="text-center">Especie</th>
-            <th class="text-center">Raza</th>
-            <th class="text-center">Fecha de registro</th>
-        </tr>
-    </thead>
+    <div id="fecha">
+        <label>Desde:</label>
+        <input type="date" class="" name="desde" id="desde">
+        <label>Hasta:</label>
+        <input type="date" class="" name="hasta" id="hasta">
+    </div>
 
-    <tbody>
+    <hr>
 
-    <?php
-    $nro=0;
-    while ($ver = mysqli_fetch_array($datos)) { 
-        $nro++;
-    ?>
-        <tr>
-            <td> <?php echo $nro;?> </td>
-            <td class="text-center"> <?php echo $ver[1];?> </td>
-            <td> <?php echo $ver[2];?> </td>
-            <td> <?php echo $ver[3];?> </td>
-            <td> <?php echo $ver[4];?> </td>
-            <td class="text-center"> <?php echo str_replace('-', '/', date('d-m-Y', strtotime($ver[9]))); ?> </td>
-        </tr>
-
-    <?php } mysqli_free_result($datos); ?>
-
-    </tbody>
-    
-</table>
+    <section id="tabla_resultado">
+        <!-- AQUI SE DESPLEGARA NUESTRA TABLA DE CONSULTA -->
+    </section>
 
     <!-- Hasta aqui el contenido -->
 </div>
 
 <script>
+
 $(document).ready(function() {
 
-    $('#example').DataTable( {
-        language: {
-            "sProcessing":     "Procesando...",
-            "sLengthMenu":     "Mostrar _MENU_ registros",
-            "sZeroRecords":    "No se encontraron resultados",
-            "sEmptyTable":     "Ningún dato disponible en esta tabla",
-            "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-            "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-            "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-            "sInfoPostFix":    "",
-            "sSearch":         "Buscar:",
-            "sUrl":            "",
-            "sInfoThousands":  ",",
-            "sLoadingRecords": "Cargando...",
-            "oPaginate": {
-                "sFirst":    "Primero",
-                "sLast":     "Último",
-                "sNext":     "Siguiente",
-                "sPrevious": "Anterior"
-            },
-            "oAria": {
-                "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+function obtener_registros(valorBusqueda) {
+    $.ajax({
+            url: 'controllers/consulta.php',
+            type: 'POST',
+            dataType: 'html',
+            data: { mascota: valorBusqueda },
+        })
+
+        .done(function(resultado) {
+            $("#tabla_resultado").html(resultado);
+        })
+}
+
+$("#buscar").on('keyup', function() {
+    var valorBusqueda = $(this).val();
+    if (valorBusqueda != "") {
+        obtener_registros(valorBusqueda);
+    } else {
+        obtener_registros();
+    }
+});
+
+
+
+
+    $("#fecha").hide();
+
+    $("#seleccion").change(function() {
+
+        $("#seleccion option:selected").each(function() {
+
+            seleccion = $(this).val();
+
+            if (seleccion == 1) {
+                $("#normal").show();
+                $("#fecha").hide();
+            } else {
+                $("#normal").hide();
+                $("#fecha").show();
             }
-        }
+
+        });
+
     });
 
-}); // Fin funcion ready
 
+
+
+}); // Fin funcion ready
 </script>
