@@ -1,5 +1,4 @@
 <?php
-
 if( isset($_POST['micro']) &&
     isset($_POST['nombre']) &&
     isset($_POST['especie']) &&
@@ -83,24 +82,18 @@ if( isset($_POST['micro']) &&
 
         }else{
 
-            echo "<script>
-                    alert('Tipo de archivo no admitido o excede el peso maximo permitido (2 MB) para calidad');
-                    window.location='../registroMascota';
-                </script>";
+            echo 3;
 
         }
 
     }else{
 
-        echo "<script>
-                    alert('Tipo de archivo no admitido o excede el peso maximo permitido (2 MB) para certificado');
-                    window.location='../registroMascota';
-                </script>";
+        echo 4;
 
     }
 
 }else{
 
-    header('Location: ../registroMascota');
+    echo 5;
     
 }

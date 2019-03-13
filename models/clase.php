@@ -6,27 +6,26 @@
 
         $sql = "insert into clientes (nombre, apellidos, run, email, direccion, id_usuario, fecha_registro) values ('$datos[nombre]', '$datos[apellido]', '$datos[run]', '$datos[email]', '$datos[direccion]', $datos[usuario], '$fecha')";
 
-        $result = mysqli_query($conn, $sql);
-
-        return $msg = "<script>
-                            alert('Registro realizado con éxito');
-                            window.location='../registroCliente';
-                        </script>";
+        if(mysqli_query($conn, $sql)){
+            return 1;
+        }else{
+            return 2;
+        }
 
     }
 
     function editarClientes($datos){
 
         include '../core/conexion.php';
+        // include '../../../core/conexion.php';
 
         $sql = "UPDATE clientes SET nombre='$datos[nombre]', apellidos='$datos[apellidos]', run='$datos[run]', email='$datos[correo]', direccion='$datos[direccion]' where id=$datos[id_usuario]";
 
-        $result = mysqli_query($conn, $sql);
-
-        return $msg = "<script>
-                        alert('Cliente actualizado con éxito');
-                        window.location='../registroCliente';
-                    </script>";
+        if (mysqli_query($conn, $sql)) {
+            return 1;
+        } else {
+            return 2;
+        }
 
     }
 
@@ -83,15 +82,37 @@
 
         include '../core/conexion.php';
 
+        // Consulta para obtener el nombre del archivo pdf
+        $borrar = mysqli_query($conn,"SELECT certificado, calidad FROM mascota WHERE id_mascota = $id_mascota");
+
+        // Almacenar arreglo
+        $row = mysqli_fetch_assoc($borrar);
+
+        // Concatenar ruta junto con el nombre del archivo
+        $certificado = "../uploads/certificados/".$row['certificado'];
+        $calidad = "../uploads/calidad/".$row['calidad'];
+
+        // Consulta de eliminar registro
         $sql = "DELETE FROM mascota WHERE id_mascota = $id_mascota";
 
-        return $result = mysqli_query($conn, $sql);
+        // Ejecutar consulta
+        $result = mysqli_query($conn, $sql);
 
+        if ($result) {
+
+            // Eliminar archivos
+            unlink($certificado);
+            unlink($calidad);
+
+            return 1;
+
+        }
+        
     }
 
     function verClientes(){
 
-        include 'core/conexion.php';
+        include '../../../core/conexion.php';
 
         $sql = "SELECT id, CONCAT(nombre, ' ', apellidos) as patron, run, email, direccion FROM clientes";
 
@@ -257,28 +278,25 @@
 
         include '../core/conexion.php';
 
+        // Verificar que la mascota no se encuentre ya registrada
         $verificar = "select * from mascota where microchip='$datos[micro]'";
         $resVerificar = mysqli_query($conn,$verificar);
         $totalVerificar = mysqli_num_rows($resVerificar);
-        if($totalVerificar == 0){
+        
+        if($totalVerificar == 0){ // Si no esta registrada
 
+            // Se registra
             $sql = "insert into mascota (microchip, nombre, id_especie, id_raza, sexo, fecha_nacimiento, id_color, id_patron_color, esterilizado, id_propietario, id_obtencion, id_razon, certificado, calidad, id_usuario, fecha_registro) values ('$datos[micro]','$datos[nombre]', $datos[especie], $datos[raza], $datos[sexo], '$datos[nacimiento]', $datos[color], $datos[patron], $datos[opcion], $datos[dueno], $datos[modo], $datos[razon], '$datos[certificado]', '$datos[calidad]', $datos[usuario], '$fecha')";
 
             $result = mysqli_query($conn,$sql);
 
             mysqli_close($conn);
 
-            return $msg = "<script>
-                            alert('Mascota registrada con éxito');
-                            window.location='../registroMascota';
-                        </script>";
+            return 1;
         
-        }else{
+        }else{ // Si esta registrada, no se vuelve a registrar
 
-            return $msg = "<script>
-                                alert('Lo siento, el código de la mascota que intentas ingresar ya se encuentra registrado');
-                                window.location='../registroMascota';
-                            </script>";
+            return 2;
         
         }
 
@@ -286,7 +304,7 @@
 
     function verMascotas(){
 
-        include 'core/conexion.php';
+        include '../../../core/conexion.php';
 
         $sql = "SELECT id_mascota, microchip, m.nombre, e.nombre as especie, r.nombre as raza, sexo, fecha_nacimiento, color, CONCAT(cl.run, ' ' , cl.nombre, ' ', cl.apellidos) as propietario, m.fecha_registro FROM mascota m
         INNER JOIN especies e ON (m.id_especie = e.id)

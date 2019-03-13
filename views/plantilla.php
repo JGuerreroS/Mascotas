@@ -6,10 +6,18 @@
 
     $vistasR = $vt->obtener_vistas_controlador();
 
-    if($vistasR == 'login'):
-        require_once './views/contenido/login-view.php';
-    elseif($vistasR == 'reporte'):
-        require_once './views/contenido/reporte-view.php';
+    if($vistasR == 'login' || $vistasR == '404'):
+
+        if ($vistasR == 'login') {
+
+            require_once './views/contenido/login-view.php';
+
+        } else {
+
+            require_once './views/contenido/404-view.php';
+
+        }
+        
     else:
 
 ?>
@@ -32,6 +40,7 @@
     </div> <!-- Fin de la tarjeta-->
 
     <?php endif; ?>
+    <?php include 'layout/scriptsFooter.php'; ?>
     
 </body>
 </html>
