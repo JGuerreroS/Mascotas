@@ -3,6 +3,8 @@
 
 <head>
     <title>Inicio de sesión</title>
+    <!-- Icono de la pestaña de la página -->
+    <link rel="icon" type="image/png" href="<?php echo SERVERURL; ?>public/img/mascota.ico">
 
     <!-- Required meta tags -->
     <meta charset="utf-8">

@@ -9,11 +9,10 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon.png">
-    <title>Matrix Template - The Ultimate Multipurpose admin template</title>
+    <link rel="icon" type="image/png" href="<?php echo SERVERURL; ?>public/img/mascota.ico">
+    <title>Error, página no encontrada</title>
     <!-- Custom CSS -->
     <link href="<?php echo SERVERURL; ?>public/css/style.css" rel="stylesheet">
-
 </head>
 
 <body>
