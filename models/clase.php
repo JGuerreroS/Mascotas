@@ -35,12 +35,17 @@
 
         $sql = "UPDATE users SET Name='$datos[nombre]', Usuario='$datos[correo]', nivel='$datos[nivel]' where Id=$datos[id_usuario]";
 
-        $result = mysqli_query($conn, $sql);
+        if(mysqli_query($conn, $sql)){
 
-        return $msg = "<script>
-                        alert('Usuario actualizado con éxito');
-                        window.location='../registroUsuarios';
-                    </script>";
+            echo 1;
+
+        }else {
+
+            echo 2;
+
+        }
+
+       
 
     }
 
@@ -74,8 +79,16 @@
 
         $sql = "DELETE FROM users WHERE Id = $id_usuario";
 
-        return $result = mysqli_query($conn, $sql);
+        if (mysqli_query($conn, $sql)) {
 
+            return 1;
+
+        } else {
+
+            return 2;
+
+        }
+    
     }
     
     function borrarMascotas($id_mascota){
@@ -320,7 +333,7 @@
 
     function verUsuarios(){
 
-        include 'core/conexion.php';
+        include '../../../core/conexion.php';
 
         $sql = "SELECT Id, Name, Usuario, fecha_registro FROM users";
 
@@ -336,13 +349,16 @@
 
         $passHash = password_hash($datos['clave'], PASSWORD_DEFAULT);
 
-        $sql = "insert into users (Name, Usuario, Password, nivel, id_usuario, fecha_registro) values ('$datos[nombre]', '$datos[email]', '$passHash', $datos[privilegio], $datos[usuario], '$fecha')";
+        $sql = "INSERT INTO users (Name, Usuario, Password, nivel, id_usuario, fecha_registro) VALUES ('$datos[nombre]', '$datos[email]', '$passHash', $datos[privilegio], $datos[usuario], '$fecha')";
 
-        $result = mysqli_query($conn, $sql);
+        if(mysqli_query($conn, $sql)){
 
-        return $msg = "<script>
-                            alert('Usuario registro con éxito');
-                            window.location='../registroUsuarios';
-                        </script>";
+            return 2;
+
+        }else{
+
+            return 3;
+
+        }
 
     }

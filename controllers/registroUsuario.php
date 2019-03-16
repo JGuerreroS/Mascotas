@@ -16,17 +16,12 @@ if( isset($_POST['nombre']) &&
     $count = mysqli_num_rows($result);
 
     if ($count > 0) {
-        
-        echo "<script>
-                    alert('El usuario ya se encuentra registrado');
-                    window.location='../registroUsuarios';
-                </script>";
 
         mysqli_close($conn);
+
+        echo 1;
 
     }else{
-
-        mysqli_close($conn);
 
         session_start();
 
@@ -40,12 +35,8 @@ if( isset($_POST['nombre']) &&
 
         include '../models/clase.php';
 
-        echo $insert = registroUsuario($datos);
+        echo registroUsuario($datos);
 
     }
-
-}else{
-
-    header('Location: ../registroUsuarios');
 
 }

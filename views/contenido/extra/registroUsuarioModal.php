@@ -1,5 +1,5 @@
 <!-- Modal registrar usuarios-->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="registrarUsuarioModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -10,7 +10,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="controllers/registroUsuario.php" method="post">
+                <form id="frmRegistarUsuario">
 
                     <div class="form-group">
                         <label>Nombre</label>
@@ -33,24 +33,29 @@
                         </select>
                     </div>
 
-                    <div class="form-group">
-                        <label>Contraseña</label>
-                        <input type="password" autofocus="autofocus" class="form-control" id="pass1" name="pass1"
-                            placeholder="Ingrese su contraseña" required>
+                    <div class="row">
+                        <div class="col-6">
+
+                            <label>Contraseña</label>
+                            <input type="password" autofocus="autofocus" class="form-control" id="pass1" name="pass1"
+                                placeholder="Ingrese su contraseña" required>
+
+                        </div>
+
+                        <div class="col-6">
+
+                            <label>Repetir contraseña</label>
+                            <input type="password" class="form-control" id="pass2" name="pass2"
+                                placeholder="Repetir contraseña" required>
+
+                        </div>
                     </div>
-
-                    <div class="form-group">
-                        <label>Repetir contraseña</label>
-                        <input type="password" class="form-control" id="pass2" name="pass2"
-                            placeholder="Repetir contraseña" required>
-                    </div>
-
-
-
+                </form>
             </div>
+
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button type="submit" id="enviar" class="btn btn-primary">Guardar</button> </form>
+                <button type="button" id="enviar" class="btn btn-primary">Guardar</button>
             </div>
         </div>
     </div>
@@ -72,7 +77,7 @@
 
             <br>
 
-            <form action="controllers/registroUsuarioEditar.php" method="post">
+            <form id="frmEditarUsuario">
 
                 <div class="card" style="width: 20rem; margin:auto">
                     <ul class="list-group list-group-flush">
@@ -94,7 +99,7 @@
                         <li class="list-group-item">
 
                             <label>Nivel de usuario:</label>
-                            <select class="form-control form-control-sm" id="vNivel" name="vNivel">                          
+                            <select class="form-control form-control-sm" id="vNivel" name="vNivel">
                                 <option value="1"> Usuario administrador </option>
                                 <option value="2"> Usuario común </option>
                             </select>
@@ -106,16 +111,16 @@
                     </ul>
                 </div>
 
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-warning" id="editar">Editar</button>
-                    <button type="submit" class="btn btn-success" id="guardar">Guardar</button>
-
             </form>
+
+            <br>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-warning" id="editarUsuario">Editar</button>
+                <button type="button" class="btn btn-success" id="guardarUsuarioEditado">Guardar</button>
+            </div>
+
         </div>
-
-
-
     </div>
-</div>
 </div>
